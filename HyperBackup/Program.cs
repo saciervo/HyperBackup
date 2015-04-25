@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HyperBackup.Core;
 using HyperBackup.Core.Application;
 using HyperBackup.Core.Interfaces;
 using HyperBackup.DependencyResolution;
@@ -13,23 +12,49 @@ namespace HyperBackup
 {
     class Program
     {
+        private static bool _hasConsole;
+
         static void Main(string[] args)
         {
             try
             {
-                var kernel = HyperBackupKernel.GetKernel();
+                LoadArguments(args);
 
-                var service = new BackupService(kernel.Get<IHyperVCommands>(), kernel.Get<IBackupStorage>());
+                var kernel = HyperBackupKernel.GetKernel(logToConsole:_hasConsole);
+                var log = kernel.Get<ILog>();
 
-                service.ExportAllVirtualMachines();
+                try
+                {
+                    log.Info("Starting Backups.");
 
-                Console.WriteLine("Done!");
-                Console.ReadLine();
+                    var backupService = new BackupService(log, kernel.Get<IHyperVCommands>(), kernel.Get<IBackupStorage>());
+                    backupService.ExportAllVirtualMachines();
+
+                    log.Info("All Backups finished.");
+                }
+                catch (Exception ex)
+                {
+                    log.Fatal("An unexpected Exception occured: " + ex);
+                }
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An exception occured: " + ex);
+                Console.WriteLine(ex);
             }
+            finally
+            {
+                if (_hasConsole)
+                {
+                    Console.WriteLine("Press any key to exit program...");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+        private static void LoadArguments(string[] args)
+        {
+             _hasConsole = !args.Contains("-noconsole");
         }
     }
 

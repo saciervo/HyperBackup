@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HyperBackup.Core.Interfaces;
 
-namespace HyperBackup.Infrastructure
+namespace HyperBackup.Infrastructure.Configuration
 {
     public class ApplicationConfig : IApplicationConfig
     {

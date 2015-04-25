@@ -55,13 +55,13 @@ namespace HyperBackup.Infrastructure
 
         public void FinalizeExport(string name)
         {
-            var currentMachinePath = Path.Combine(BackupDirectory.FullName, name);
-            var exportedMachinePath = Path.Combine(ProgressDirectory.FullName, name);
-            var tempMachinePath = string.Concat(currentMachinePath, ".temp");
+            var exportPath = Path.Combine(BackupDirectory.FullName, name);
+            var newExportPath = Path.Combine(ProgressDirectory.FullName, name);
+            var tempExportPath = string.Concat(exportPath, ".temp");
 
-            Directory.Move(exportedMachinePath, tempMachinePath);
-            Directory.Delete(currentMachinePath, true);
-            Directory.Move(tempMachinePath, currentMachinePath);
+            Directory.Move(newExportPath, tempExportPath);
+            Directory.Delete(exportPath, true);
+            Directory.Move(tempExportPath, exportPath);
         }
     }
 }

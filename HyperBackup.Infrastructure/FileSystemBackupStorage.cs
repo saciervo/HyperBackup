@@ -59,8 +59,14 @@ namespace HyperBackup.Infrastructure
             var newExportPath = Path.Combine(ProgressDirectory.FullName, name);
             var tempExportPath = string.Concat(exportPath, ".temp");
 
+            // Move the freshly exported machine to a temporary path in the backup directory.
             Directory.Move(newExportPath, tempExportPath);
-            Directory.Delete(exportPath, true);
+
+            // If an older export of this machine already exists, delete it now.
+            if (Directory.Exists(exportPath))
+                Directory.Delete(exportPath, true);
+
+            // Move the freshly exported machine from its temporary path to its final path.
             Directory.Move(tempExportPath, exportPath);
         }
     }

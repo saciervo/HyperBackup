@@ -20,3 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+HyperBackup includes works distributed under the licenses listed below. Please 
+refer to the specified links for more detailed information about the authors, 
+copyright notices, and licenses.
+
+## Ninject
+Website:      http://www.ninject.org/
+Copyright:    
+License:      https://github.com/ninject/Ninject/blob/master/LICENSE.txt (MS-PL)
+
+## NLog
+Website:      http://nlog-project.org/
+Copyright:    Copyright (c) 2004-2011 Jaroslaw Kowalski <jaak@jkowalski.net>
+License:      https://github.com/NLog/NLog/blob/master/LICENSE.txt
+

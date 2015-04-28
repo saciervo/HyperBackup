@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{D95586AC-375E-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyResolution", "DependencyResolution", "{8396C4E6-72AD-4BFF-BC45-577ECEF4218C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperBackup.Service", "HyperBackup.Service\HyperBackup.Service.csproj", "{9749C350-A9FC-4801-99EA-E1EE8231FA7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{9386A8E5-A513-4DBC-9BCC-E0C0C9CD0B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9386A8E5-A513-4DBC-9BCC-E0C0C9CD0B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9386A8E5-A513-4DBC-9BCC-E0C0C9CD0B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9749C350-A9FC-4801-99EA-E1EE8231FA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9749C350-A9FC-4801-99EA-E1EE8231FA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9749C350-A9FC-4801-99EA-E1EE8231FA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9749C350-A9FC-4801-99EA-E1EE8231FA7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +50,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C15D90DE-0614-45A1-904B-CF2F6812558B} = {D95586AC-375E-4713-BEBA-0E0AA13B6D19}
 		{9386A8E5-A513-4DBC-9BCC-E0C0C9CD0B64} = {8396C4E6-72AD-4BFF-BC45-577ECEF4218C}
+		{9749C350-A9FC-4801-99EA-E1EE8231FA7E} = {D95586AC-375E-4713-BEBA-0E0AA13B6D19}
 	EndGlobalSection
 EndGlobal

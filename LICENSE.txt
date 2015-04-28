@@ -26,12 +26,16 @@ refer to the specified links for more detailed information about the authors,
 copyright notices, and licenses.
 
 ## Ninject
-Website:      http://www.ninject.org/
-Copyright:    
-License:      https://github.com/ninject/Ninject/blob/master/LICENSE.txt (MS-PL)
+Website:	http://www.ninject.org/
+Copyright:	  
+License:	https://github.com/ninject/Ninject/blob/master/LICENSE.txt (MS-PL)
 
 ## NLog
-Website:      http://nlog-project.org/
-Copyright:    Copyright (c) 2004-2011 Jaroslaw Kowalski <jaak@jkowalski.net>
-License:      https://github.com/NLog/NLog/blob/master/LICENSE.txt
+Website:	http://nlog-project.org/
+Copyright:	Copyright (c) 2004-2011 Jaroslaw Kowalski <jaak@jkowalski.net>
+License:	https://github.com/NLog/NLog/blob/master/LICENSE.txt
 
+## Topshelf
+Website:	http://topshelf-project.com/
+Copyright:	
+License:	https://github.com/Topshelf/Topshelf/blob/develop/LICENSE

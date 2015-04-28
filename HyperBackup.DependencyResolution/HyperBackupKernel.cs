@@ -19,9 +19,9 @@ namespace HyperBackup.DependencyResolution
 
             // Bindings
             kernel.Bind<IApplicationConfig>().To<ApplicationConfig>().InSingletonScope();
-            kernel.Bind<ILog>().To<NLogWrapper>().WithConstructorArgument("logToConsole", logToConsole);
+            kernel.Bind<ILog>().To<NLogWrapper>().InSingletonScope();
             kernel.Bind<IHyperVCommands>().To<HyperVPowerShell>().InSingletonScope();
-            kernel.Bind<IBackupStorage>().To<FileSystemBackupStorage>();
+            kernel.Bind<IBackupStorage>().To<FileSystemBackupStorage>().InSingletonScope();
 
             return kernel;
         }

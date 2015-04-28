@@ -16,36 +16,33 @@ namespace HyperBackup
 
         static void Main(string[] args)
         {
+            // Load startup arguments
+            LoadArguments(args);
+
+            // Get Ninject kernel
+            var kernel = HyperBackupKernel.GetKernel(logToConsole: _hasConsole);
+
+            // Load logging service
+            var log = kernel.Get<ILog>();
             try
             {
-                LoadArguments(args);
+                log.Info("Starting Backups.");
 
-                var kernel = HyperBackupKernel.GetKernel(logToConsole:_hasConsole);
-                var log = kernel.Get<ILog>();
+                // Start the main operation(s)
+                var backupService = new BackupService(log, kernel.Get<IHyperVCommands>(), kernel.Get<IBackupStorage>());
+                backupService.ExportAllVirtualMachines();
 
-                try
-                {
-                    log.Info("Starting Backups.");
-
-                    var backupService = new BackupService(log, kernel.Get<IHyperVCommands>(), kernel.Get<IBackupStorage>());
-                    backupService.ExportAllVirtualMachines();
-
-                    log.Info("All Backups finished.");
-                }
-                catch (Exception ex)
-                {
-                    log.Fatal("An unexpected Exception occured: " + ex);
-                }
-
+                log.Info("All Backups finished.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                log.Fatal("An unexpected Exception occured: " + ex);
             }
             finally
             {
                 if (_hasConsole)
                 {
+                    // Do not close console automatically after the program run.
                     Console.WriteLine("Press any key to exit program...");
                     Console.ReadLine();
                 }
@@ -54,7 +51,7 @@ namespace HyperBackup
 
         private static void LoadArguments(string[] args)
         {
-             _hasConsole = !args.Contains("-noconsole");
+            _hasConsole = !args.Contains("-noconsole");
         }
     }
 

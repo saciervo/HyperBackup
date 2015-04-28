@@ -16,7 +16,7 @@ namespace HyperBackup.Infrastructure
         {
             get
             {
-                var backupDirectory = _applicationConfig.BackupPath;
+                var backupDirectory = new DirectoryInfo(_applicationConfig.BackupPath);
                 if (!backupDirectory.Exists)
                     backupDirectory.Create();
 

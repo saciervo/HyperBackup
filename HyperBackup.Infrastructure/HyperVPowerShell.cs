@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Management.Automation;
+using System.Text;
+using HyperBackup.Core;
 using HyperBackup.Core.Interfaces;
 
 namespace HyperBackup.Infrastructure
@@ -15,36 +17,33 @@ namespace HyperBackup.Infrastructure
         {
             var result = instance.Invoke();
 
-            // check the other output streams (for example, the error stream)
+            // Check the error stream for exceptions and throw the first one
             if (instance.Streams.Error.Count > 0)
-            {
-                // Error records were written to the error stream.
-                // For now, just create a collection of the exceptions.
-                var exceptions = new ArrayList();
-                foreach (var record in instance.Streams.Error)
-                {
-                    exceptions.Add(record.Exception);
-                }
-
-                throw new ExceptionCollection(exceptions);
-            }
+                throw instance.Streams.Error[0].Exception;
 
             return result;
         }
 
         public List<string> GetVirtualMachines()
         {
-            using (var instance = PowerShell.Create())
+            try
             {
-                // Build
-                instance.AddCommand("Get-VM");
+                using (var instance = PowerShell.Create())
+                {
+                    // Build
+                    instance.AddCommand("Get-VM");
 
-                // Execute
-                var output = Invoke(instance);
+                    // Execute
+                    var output = Invoke(instance);
 
-                // Evaluate
-                var result = output.Select(x => x.Properties["VMName"].Value.ToString()).ToList();
-                return result;
+                    // Evaluate
+                    var result = output.Select(x => x.Properties["VMName"].Value.ToString()).ToList();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new PowerShellException(ex);
             }
         }
 
@@ -65,9 +64,11 @@ namespace HyperBackup.Infrastructure
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("ExportVirtualMachine", ex);
-            }
+                if (ex.Message.Contains("canceled"))
+                    throw new PowerShellException("ExportCanceled", "The export operation was canceled by the user.", ex);
 
+                throw new PowerShellException(ex);
+            }
         }
     }
 }

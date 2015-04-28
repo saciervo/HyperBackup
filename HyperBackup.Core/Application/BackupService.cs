@@ -19,7 +19,10 @@ namespace HyperBackup.Core.Application
 
         public void ExportAllVirtualMachines()
         {
+            _log.Info("Get the names of the virtual machines from Hyper-V.");
             var names = _hyperVCommands.GetVirtualMachines();
+            _log.Debug("Virtual machines found: " + string.Join(", ", names));
+
             foreach (var name in names)
             {
                 ExportVirtualMachine(name);
@@ -38,15 +41,9 @@ namespace HyperBackup.Core.Application
 
                 _log.Info("Export successful.");
             }
-            catch (ExceptionCollection collection)
+            catch (PowerShellException  ex)
             {
-                if (collection.Exceptions != null)
-                {
-                    foreach (var ex in collection.Exceptions)
-                    {
-                        _log.Error("Export failed.", ex as Exception);
-                    }
-                }
+                _log.Error(string.Concat("Export failed: ", ex.Message), ex.InnerException);
             }
             catch (Exception ex)
             {

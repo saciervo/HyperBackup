@@ -45,6 +45,7 @@
     <Compile Include="Interfaces\IBackupStorage.cs" />
     <Compile Include="Interfaces\IHyperVCommands.cs" />
     <Compile Include="Interfaces\ILog.cs" />
+    <Compile Include="PowerShellException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

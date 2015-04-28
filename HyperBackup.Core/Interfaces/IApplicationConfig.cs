@@ -9,6 +9,9 @@ namespace HyperBackup.Core.Interfaces
 {
     public interface IApplicationConfig
     {
-        DirectoryInfo BackupPath { get; }
+        string BackupPath { get; }
+        bool LogToConsole { get; }
+        string FileLogLevel { get; }
+        string ConsoleLogLevel { get; }
     }
 }

@@ -8,11 +8,23 @@ namespace HyperBackup.Infrastructure.Logging
 {
     public class NLogWrapper : ILog
     {
+        private readonly IApplicationConfig _config;
         private readonly Logger _logger = LogManager.GetLogger("NLog");
 
-        public NLogWrapper(bool logToConsole = false)
+        public NLogWrapper(IApplicationConfig applicationConfig)
         {
-            ConfigureLogger(logToConsole);
+            _config = applicationConfig;
+            ConfigureLogger();
+        }
+
+        public void Trace(string message)
+        {
+            Log(LogLevel.Trace, message);
+        }
+
+        public void Debug(string message)
+        {
+            Log(LogLevel.Debug, message);
         }
 
         public void Info(string message)
@@ -29,17 +41,17 @@ namespace HyperBackup.Infrastructure.Logging
         {
             Log(LogLevel.Error, message);
             if (exception != null)
-                Log(LogLevel.Trace, exception.ToString());
+                Trace(exception.ToString());
         }
 
         public void Fatal(string message, Exception exception = null)
         {
             Log(LogLevel.Fatal, message);
             if (exception != null)
-                Log(LogLevel.Trace, exception.ToString());
+                Trace(exception.ToString());
         }
-        
-        private static void ConfigureLogger(bool logToConsole)
+
+        private void ConfigureLogger()
         {
             var loggingConfig = new LoggingConfiguration();
             ConfigurationItemFactory.Default.LayoutRenderers.RegisterDefinition("LogLevelIndicator", typeof(LogLevelIndicatorLayoutRenderer));
@@ -51,17 +63,17 @@ namespace HyperBackup.Infrastructure.Logging
                 Layout = "${longdate} ${LogLevelIndicator} ${message}"
             };
             loggingConfig.AddTarget("file", fileTarget);
-            loggingConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, fileTarget));
+            loggingConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.FromString(_config.FileLogLevel), fileTarget));
 
             // Configure Console as Logging Target
-            if (logToConsole)
+            if (_config.LogToConsole)
             {
                 var consoleTarget = new ColoredConsoleTarget
                 {
                     Layout = @"[${level:uppercase=true}] ${message}"
                 };
                 loggingConfig.AddTarget("console", consoleTarget);
-                loggingConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.Info, consoleTarget));
+                loggingConfig.LoggingRules.Add(new LoggingRule("*", LogLevel.FromString(_config.ConsoleLogLevel), consoleTarget));
             }
 
             LogManager.Configuration = loggingConfig;
